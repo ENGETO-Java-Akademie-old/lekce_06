@@ -52,6 +52,78 @@ V dnešní době je Git nejrozšířenějším verzovacím systémem a neodděli
 
 ## Instalace GITu
 
+### Instalace na Windows
+
+ - Stáhni si instalační soubor Gitu pro Windows.
+ - Spusť si instalátor, a pokud jsi jako většina uživatelů, stačí se proklikat nakonec instalace pomocí tlačítek Next a Finish.
+ - Otevři si program Git Bash. Do vyhledávání na tvém počítači stačí zadat Git Bash a zmáčknout Enter.
+ - Pomocí následujících příkazů si nastav uživatelské jméno a e-mail. S těmito údaji budou potom asociovány změny v projektu na tvém počítači. Doplň samozřejmě své údaje.
+```
+$ git config --global user.name "Jméno Příjmení"
+$ git config --global user.email "tvuj_email@gmail.com"
+```
+
+### Instalace na Linuxu
+
+ - Otevři si příkazový řádek a v závislosti na distribuci proveď následující příkaz:
+```
+$ sudo apt-get update           # Debian/Ubuntu
+$ sudo apt-get install git
+```
+
+nebo:
+```
+$ sudo dnf install git          # Fedora
+```
+případně:
+```
+$ sudo yum install git          # Fedora
+```
+ - Ověř, že instalace proběhla úspěšně:
+ ```
+$ git --version
+git version 2.20.1
+```
+ - Nastav si uživatelské jméno a e-mail. S těmito údaji budou potom asociovány změny v projektu na tvém počítači. Doplň samozřejmě své údaje.
+```
+$ git config --global user.name "Jméno Příjmení"
+$ git config --global user.email "tvuj_email@gmail.com"
+```
+
+### Instalace na MacOs
+
+Existuje více způsobů, jak si nainstalovat Git na MacOS. My si zde ukážeme dva, instalaci pomocí Mac Installeru nebo Homebrew:
+
+#### Mac Installer
+ - Stáhni si instalační soubor Gitu pro MacOS.
+ - Proklikej se instalací.
+ - Otevři si terminál a ověř, že instalace proběhla úspěšně:
+```
+$ git --version
+git version 2.20.1
+```
+ - Nastav si uživatelské jméno a e-mail. S těmito údaji budou potom asociovány změny v projektu na tvém počítači. Doplň samozřejmě své údaje.
+```
+$ git config --global user.name "Jméno Příjmení"
+$ git config --global user.email "tvuj_email@gmail.com"
+```
+
+#### Homebrew
+ - Otevři si terminál a zadej následující příkaz:
+```
+$ brew install git
+```
+ - Ověř si v terminálu, že instalace proběhla úspěšně:
+```
+$ git --version
+git version 2.20.1
+```
+ - Nastav si uživatelské jméno a e-mail. S těmito údaji budou potom asociovány změny v projektu na tvém počítači. Doplň samozřejmě své údaje.
+```
+$ git config --global user.name "Jméno Příjmení"
+$ git config --global user.email "tvuj_email@gmail.com"
+```
+
 ## Repozitář
 
 Git pracuje s takzvanými repozitáři, zkráceně repo. Jedná se o místo, kde uchováváme náš kód. V rámci Gitu máme dva druhy:
