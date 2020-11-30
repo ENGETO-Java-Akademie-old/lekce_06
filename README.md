@@ -70,7 +70,7 @@ Repozitáře většinou následují tento proces:
 
 ## Hostingové služby
 
-Aby mohli vývojáři mezi sebou kdykoliv sdílet projekt, na kterém spolupracují, potřebují místo na webu, kde budou uchovávat svůj zdrojový kód. Toto místo poskytují právě takzvané Git webové služby. Jedná se o webové aplikace, které využívají Git ke správě repozitářů. Mezi nejznámější patří [GitHub](https://github.com/), [GitLab](https://about.gitlab.com/), [Bitbucked](https://bitbucket.org/), ale existuje jich mnohem víc.
+Aby mohli vývojáři mezi sebou kdykoliv sdílet projekt, na kterém spolupracují, potřebují místo na webu, kde budou uchovávat svůj zdrojový kód. Toto místo poskytují právě takzvané Git webové služby. Jedná se o webové aplikace, které využívají Git ke správě repozitářů. Mezi nejznámější patří [GitHub](https://github.com/), [GitLab](https://about.gitlab.com/), [Bitbucket](https://bitbucket.org/), ale existuje jich mnohem víc.
 
 Stejně jako Git, každá z těchto webových služeb má své zastánce. Z důvodu zachování jednoduchosti budeme pracovat pouze s tou nejznámější – GitHub.
 
@@ -79,6 +79,18 @@ Stejně jako Git, každá z těchto webových služeb má své zastánce. Z dův
 ## ssh klíč
 
 ## IDE vs terminál
+
+#### Vývojové prostředí (IDE)
+
+Pokud se chceš věnovat vývoji softwaru, budeš určitě potřebovat vývojové prostředí. Práce s Gitem je ve vývojových prostředích většinou automatizovaná. To často urychluje a zjednodušuje práci.
+
+#### Příkazový řádek
+
+Možná si říkáš: Proč mi budete ukazovat Git v příkazovém řádku, když je to ve vývojovém prostředí jednodušší a efektivnější?
+
+Protože pokud jsi s Gitem (nebo jiným verzovacím systémem) nikdy nepracoval, je dobré vidět, co se děje na pozadí. Nehledě na to, že každý vývojář by měl znát aspoň základní příkazy pro práci s příkazovým řádkem – přesouvání se mezi složkami, vytváření, úprava, čtení nebo odstranění souborů a podobně.
+
+Pokud máš Windows, budeš používat Git Bash, který přichází s instalací Gitu. Na Linuxu nebo Mac OS budeš používat terminál, jenž je součástí systému.
 
 ## Příkazy
 
