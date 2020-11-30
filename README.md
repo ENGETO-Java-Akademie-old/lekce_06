@@ -56,11 +56,9 @@ V dnešní době je Git nejrozšířenějším verzovacím systémem a neodděli
 
 Git pracuje s takzvanými repozitáři, zkráceně repo. Jedná se o místo, kde uchováváme náš kód. V rámci Gitu máme dva druhy:
 
-### Vzdálený repozitář
-– jedná se o místo na serveru (na internetu) jedné z Git hosting služby (GitHub, GitLab, Bitbucked), kde uchováváme kód sdílený s ostatními vývojáři.
+<b>Vzdálený repozitář</b> – jedná se o místo na serveru (na internetu) jedné z Git hosting služby (GitHub, GitLab, Bitbucked), kde uchováváme kód sdílený s ostatními vývojáři.
 
-### Lokální repozitář
-– jedná se kopii vzdáleného repozitáře, kterou uchováváme u sebe na počítači.
+<b>Lokální repozitář</b> – jedná se kopii vzdáleného repozitáře, kterou uchováváme u sebe na počítači.
 
 Repozitáře většinou následují tento proces:
 
@@ -72,7 +70,11 @@ Repozitáře většinou následují tento proces:
 
 ## Hostingové služby
 
-## Účet na githubu
+Aby mohli vývojáři mezi sebou kdykoliv sdílet projekt, na kterém spolupracují, potřebují místo na webu, kde budou uchovávat svůj zdrojový kód. Toto místo poskytují právě takzvané Git webové služby. Jedná se o webové aplikace, které využívají Git ke správě repozitářů. Mezi nejznámější patří [GitHub](https://github.com/), [GitLab](https://about.gitlab.com/), [Bitbucked](https://bitbucket.org/), ale existuje jich mnohem víc.
+
+Stejně jako Git, každá z těchto webových služeb má své zastánce. Z důvodu zachování jednoduchosti budeme pracovat pouze s tou nejznámější – GitHub.
+
+## Účet na GitHubu
 
 ## ssh klíč
 
