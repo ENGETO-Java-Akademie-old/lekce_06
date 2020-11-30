@@ -54,7 +54,7 @@ V dnešní době je Git nejrozšířenějším verzovacím systémem a neodděli
 
 ### Instalace na Windows
 
- - Stáhni si instalační soubor Gitu pro Windows.
+ - Stáhni si [instalační soubor](https://gitforwindows.org/) Gitu pro Windows.
  - Spusť si instalátor, a pokud jsi jako většina uživatelů, stačí se proklikat nakonec instalace pomocí tlačítek Next a Finish.
  - Otevři si program Git Bash. Do vyhledávání na tvém počítači stačí zadat Git Bash a zmáčknout Enter.
  - Pomocí následujících příkazů si nastav uživatelské jméno a e-mail. S těmito údaji budou potom asociovány změny v projektu na tvém počítači. Doplň samozřejmě své údaje.
@@ -95,7 +95,7 @@ $ git config --global user.email "tvuj_email@gmail.com"
 Existuje více způsobů, jak si nainstalovat Git na MacOS. My si zde ukážeme dva, instalaci pomocí Mac Installeru nebo Homebrew:
 
 #### Mac Installer
- - Stáhni si instalační soubor Gitu pro MacOS.
+ - Stáhni si [instalační soubor](https://sourceforge.net/projects/git-osx-installer/files/) Gitu pro MacOS.
  - Proklikej se instalací.
  - Otevři si terminál a ověř, že instalace proběhla úspěšně:
 ```
@@ -148,7 +148,78 @@ Stejně jako Git, každá z těchto webových služeb má své zastánce. Z dův
 
 ## Účet na GitHubu
 
+GitHub je tedy platforma, která může uchovávat naše projekty online, aby byly dostupné i ostatním vývojářům nebo zaměstnavatelům. Jinými slovy jde o místo, kde můžeme uchovávat zdrojový kód ve formě vzdáleného repozitáře (remote repo). Tento repozitář by měl mít určitou strukturu a měli bychom s ním zacházet určitým způsobem. To vše si ukážeme v dalších lekcích.
+
+Než si založíme první repozitář na GitHubu, musíme si založit účet. Pojďme si ukázat, jak na to:
+
+ - Jdi na [github.com](https://github.com/).
+ - Registruj se pomocí formuláře.
+ - Projdi třídílným procesem registrace.
+ - Ověř svůj e-mail (jdi do svého e-mailu a klikni na ověřovací link).
+ - Měl by ses objevit na domovské stránce uživatele, kde můžeš začít prozkoumávat GitHub :).
+ - Abys získal lepší obecnou představu, o čem vlastně GitHub je, doporučujeme se podívat na krátké edukační video přímo od GitHubu.
+
 ## ssh klíč
+
+### Vygenerování ssh klíče
+
+ - Otevřeme si terminál (Linux, MacOS) nebo Git Bash (Windows).
+```
+$
+```
+ - Přesuneme se do domovského adresáře.
+```
+$ cd ~
+```
+ - Vygenerujeme si SSH klíč.
+```
+$ ssh-keygen -t rsa
+```
+ - Po zmáčknutí klávesy Enter budeme dotázáni na místo uložení klíče a heslo. Pokud nechceme měnit navrženou cestu a heslo nepotřebujeme, stačí se proklikat opět pomocí Enter.
+```
+Generating public/private rsa key pair. 
+Enter file in which to save the key (/home/user/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+```
+ - Výstup potom může vypadat nějak takto:
+```
+Your identification has been saved in /home/user/.ssh/id_rsa.
+Your public key has been saved in /home/user/.ssh/id_rsa.pub.
+The key fingerprint is:
+60:8b:50:1e:0f:bc:5a:2a:13:1e:83:2b:d9:95:38:9e user@localhost
+The key's randomart image is:
++---[RSA 2048]----+
+|   .+            |
+|   o.+           |
+|. ...o+          |
+|ooo.=o o         |
+|.*oB. . S        |
+|*.E              |
+|.o               |
+|                 |
+|                 |
++-----------------+
+```
+ - Přečteme soubor s klíčem a zkopírujeme výstup (Ctrl+c) – musíme se ujistit, že zkopírujeme vše od ssh až pod localdomain bez přebytečných mezer!:
+```
+$ cat /home/user/.ssh/id_rsa.pub
+ssh-rsa AAAAB3N...                      # Kopírujeme tedy od začátku tohoto řádku...
+...
+... user@localhost.localdomain          # ...po konec tohoto řádku.
+```
+
+### Vložení SSH klíče do GitHubu
+
+ - Ve našem repozitáři klikneme na Clone or download a následně na Use SSH.
+ - Klikneme na add a new public key.
+ - Vložíme a uložíme:
+```
+jméno svého klíče podle zařízení,
+klíč samotný (Ctrl+v).
+```
+
+Hotovo! Máme nastavený náš veřejný SSH klíč. Nyní můžeme začít používat SSH URL (kterou najdeme v našem repozitáři) pro klonování repozitáře.
 
 ## IDE vs terminál
 
