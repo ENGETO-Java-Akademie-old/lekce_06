@@ -237,28 +237,246 @@ Pokud máš Windows, budeš používat Git Bash, který přichází s instalací
 
 ## Příkazy
 
+ - [git config](#git-config)
+ 
+ - [git init](#git-init)
+  
+ - [git clone](#git-clone)
+   
+ - [git add](#git-add)
+    
+ - [git commit](#git-commit)
+     
+ - [git push](#git-push)
+      
+ - [git pull](#git-pull)
+       
+ - [git config](#git-status)
+        
+ - [git config](#git-diff)
+ 
+ - [git config](#git-log)
+ 
+ - [git config](#git-tag)
+ 
+ - [git config](#git-blame)
+ 
+ - [git config](#git-checkout)
+ 
+ - [git config](#git-merge)
+
 ### git config
+
+Slouží k nastavovaní gitu. My jsme si pomocí něj v předchozích krocích nastavovali uživatelské jméno a email, který bude spojený s našimi úpravami.
 
 ### git init
 
+Při inicializaci lokálního repozitáře, a to příkazem git init, vzniká repozitář nejdříve u nás na počítači. Složka, ve které tento příkaz spustíme, se stane Git repozitářem. Náš systém pozná, že jde o Git repozitář, protože příkaz git init vytvoří složku .git, která obsahuje konfigurační informace Git repozitáře. Nemusíme vědět, co přesně se v této složce nachází, protože s ní nebudeme přímo pracovat. Jen si zapamatujme, že díky ní víme, že se jedná o Git repozitář.
+
+ - Vytvoříme si na svém počítači složku, která bude reprezentovat náš první repozitář (například s názvem my_first_repo). Později budeme mít v této složce náš zdrojový kód. Pokud používáme Linuxu nebo MacOS, otevřeme si terminál. Pokud Windows, spustíme si Git Bash.
+```
+$
+```
+ - Přemístíme se do složky repozitáře.
+```
+$ cd /cesta/k/tvemu/repozitari/my_first_repo        # Příkaz 'cd' nás dostane do dané složky.
+```
+ - Inicializujeme lokální git repozitář (je možné, že dostaneme hlášení o jeho vytvoření).
+```
+git init                                            # Příkaz 'git init' inicializuje Git repozitář.
+Initialized empty Git repository in /cesta/k/tvemu/repozitari/my_first_repo/.git/
+```
+ - Ověříme, že se složky .git nachází v našem lokálním git repozitáři.
+```
+$ ls -a                                            # Příkaz 'ls -a' vypíše rozšířený seznam všechny souborů.
+.git
+```
+
 ### git clone
+
+Klonování vzdáleného repozitáře znamená, že k sobě kopírujeme již existující vzdálený repozitář (například z GitHubu) i se složkou .git. To je klíčový rozdíl mezi stažením a klonováním repozitáře. Složka .git totiž obsahuje veškerou historii repozitáře. Když si tedy k sobě naklonujeme repozitář, můžeme se dívat na jeho různé verze právě díky složce .git.
+
+Složka může být skrytá. Nezapomeň si tedy ve svém správci souborů odkrýt skryté složky.
+
+Zde můžeme vidět výhodu distribuované verzovacího systému oproti centralizovanému. Po naklonování repozitáře u sebe máme repozitář s jeho celou historií. To znamená, že kdyby došlo k poruše disku na serveru (například GitHubu), můžeme použít libovolný klon k obnovení serveru do stavu, ve kterém byl v okamžiku klonování.
+
+ - Půjdeme do našeho repozitáře na GitHubu a zkopírujeme si SSH URL.
+ - Otevřeme si terminál (Linux, MacOS) nebo Git Bash (Windows).
+```
+$
+```
+ - Přesuneme se do adresáře, kde si budeme chtít naklonovat náš repozitář.
+```
+$ cd /cesta/k/tve/slozce
+```
+ - Naklonujeme si repozitář.
+```
+$ git clone git@github.com:user/my-github-repo.git
+Cloning into 'my-github-repo'...
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Compressing objects: 100% (2/2), done.
+Receiving objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+```
+ - Náš adresář by měl obsahovat README.md soubor, jehož obsah si můžeme přečíst a tím se přesvědčit, že vše proběhlo úspěšně.
+```
+$ cat my-github-repo/README.md 
+# my-github-repo
+I will test my Git knowledge on this repo.
+```
+ - Nastavíme si konfigurační atributy pro tento repozitář. (tento krok není nutný, pokud máte již nastavenou globální konfiguraci gitu a nechcete pro tento repozitář nějakou speciální)
+```
+$ git config --local user.name "Jméno Příjmení"         # Nastavení Git jména pro tento repozitář.
+$ git config --local user.email "tvuj_email@gmail.com"  # Nastavení Git e-mailu pro tento repozitář
+```
 
 ### git add
 
+Nově vytvořené a již existující změněné soubory můžeme připravit k zápisu (stage) pomocí příkazu git add, který přesouvá soubory z pracovního adresáře (anglicky working directory) do prostoru připravených změn (anglicky staging area).
+
+```
+$ git add script.py 
+$ git add README.md
+```
+
+Tento zápis bychom mohli zkrátit buď takto:
+
+```
+$ git add script.py README.md       # Cesty ke každému souboru uvedeme za samotný příkaz.
+```
+
+Nebo takto:
+
+```
+$ git add -A                        # Tento přepínač přidá všechny sledované i nesledované soubory.
+```
+
 ### git commit
+
+„Uložit soubor“ běžně znamená přepsat stávající soubor na základě změn, které proběhly od posledního uložení. My už víme, že Git je verzovací systém, tudíž místo toho, abychom přepisovali jeden soubor, spíše ukládáme novou verzi souborů.
+
+Uložení aktuální verze nazýváme commit, který provádíme lokálně. To znamená, že při každém commitu se ještě nic neposílá do vzdáleného repozitáře (na GitHubu). K tomu se ale brzy dostaneme. Všechny naše dosavadní verze (commity) jsou nám tedy vždy dostupné i bez internetu a můžeme se k nim vrátit.
+
+Commit provádíme pomocí příkazu git commit. Správně by každý commit měl mít zprávu, která jednou větou dokumentuje provedené změny. Můžeme ji specifikovat pomocí přepínače -m:
+
+$ git commit -m "Created MyFirstClass.java, Added new line to README.md"
+Příkaz git commit automaticky ukládá vše, co bylo přepraveno k zápisu (MyFirstClass.java, README.md). Není tedy potřeba specifikovat, které soubory chceme uložit.
+
+Všimněme si, že zpráva dokumentuje dva různé soubory, což není nejlepší způsob. V našem případě by tedy bylo lepší pomocí git add přidat každý soubor zvlášť a pomocí git commit je uložit.
+
+Takže pro README.md:
+```
+$ git add README.md
+$ git commit -m 'Added new line to README.md'
+```
+a MyFirstClass.java:
+```
+$ git add MyFirstClass.java
+$ git commit -m 'Created MyFirstClass.java'
+```
+V praxi samozřejmě budeme provádět změny, které budou ve více na sobě závislých souborech. Například se budou všechny týkat určité funkcionality naší aplikace.
+
+Pro ověření se podívejme na aktuální stav repozitáře:
+```
+$ git status
+On branch master
+Your branch is ahead of 'origin/master' by 2 commits.
+  (use "git push" to publish your local commits)
+nothing to commit, working tree clean               # Nemáme nic k zápisu.
+```
 
 ### git push
 
+Příkaz git push slouží k tomu, abychom nahráli změny (anglicky push) na vzdálený repozitář na GitHubu. Z anglického názvu vyplývá název příkazu – git push.
+```
+$ git push
+Username for 'https://github.com': <username>           # Zde zadej své GitHub uživatelské jméno nebo e-mail.
+Password for 'https://username@github.com': <password>  # Své heslo z GitHubu.
+Enumerating objects: 11, done.
+Counting objects: 100% (11/11), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (9/9), 846 bytes | 282.00 KiB/s, done.
+Total 9 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), done.
+To https://github.com/username/my-github-repo.git
+   33a5639..a85d116  master -> master
+```
+
 ### git pull
 
+Pro úplnost ještě přidáme příkaz pro stažení poslední verze ze vzdáleného repozitáře na GitHubu. K tomu používáme příkaz git pull.
+
+Pokud jsme jediní, kdo přispívá do repozitáře, dostaneme tento výstup:
+```
+$ git pull
+Already up to date.
+```
+
 ### git status
+
+Příkaz git status nám uhazuje stav skoro všech souborů – nesledované, změněné a připravené k zapsání. Výjimkou jsou nezměněné soubory (jsou součástí posledního commitu).
+
+Příkaz nám tedy umožňuje vidět pouze soubory, které spadají do dvou ze tří stromů Gitu – Working Directory (pracovní adresář) a Index (Staging Area – prostor připravených změn). Nezobrazí Historii commitů (k tomu slouží [git log](#git-log)).
+
+Aktuální výstup příkazu by měl vypadal nějak takto:
+
+```
+$ git status
+On branch master
+Your branch is ahead of 'origin/master' by 2 commits.
+  (use "git push" to publish your local commits)
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+    modified:   README.md
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+    .gitignore
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+Zkrácený výstup tohoto příkazu můžeme vytisknout pomocí přepínače -s (z anglického short).
+```
+$ git status -s
+ M README.md
+?? .gitignore
+```
+
+Kdybychom chtěli vidět i soubory, které jsou ignorovány, mohli bychom přidat volbu --ignored:
+```
+$ git status -s --ignored
+ M README.md
+?? .gitignore
+!! .idea/
+```
+Obecný formát výstupu je XY cesta/k/souboru. Písmena XY reprezentují aktuální stav daného souboru, který může nabývat různých hodnot. V našem případě vidíme tento výstup:
+
+README.md (M) – na pozici Y máme písmeno M, což znamená, že soubor byl upraven, ale nepřidán do indexu.
+.gitignore (??) – na obou pozicích máme otazníky, což znamená, že soubor není sledován.
+.idea/ (!!) – soubor je ignorován.
+Podrobný výpis možných stavů a jejich kombinací můžeme najít v dokumentaci příkazu git status:
+
+```
+$ git status --help
+...
+      X          Y     Meaning
+    -------------------------------------------------
+               [AMD]   not updated
+      M        [ MD]   updated in index
+      A        [ MD]   added to index
+...
+```
 
 ### git diff
-
-### git status
 
 ### git log
 
 ### git tag
 
 ### git blame
+
+### git checkout
+
+### git merge
