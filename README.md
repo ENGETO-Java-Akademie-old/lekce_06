@@ -251,19 +251,21 @@ Pokud máš Windows, budeš používat Git Bash, který přichází s instalací
       
  - [git pull](#git-pull)
        
- - [git config](#git-status)
+ - [git status](#git-status)
         
- - [git config](#git-diff)
+ - [git diff](#git-diff)
  
- - [git config](#git-log)
+ - [git log](#git-log)
  
- - [git config](#git-tag)
+ - [git tag](#git-tag)
  
- - [git config](#git-blame)
+ - [git blame](#git-blame)
  
- - [git config](#git-checkout)
+ - [git checkout](#git-checkout)
  
- - [git config](#git-merge)
+ - [git merge](#git-merge)
+ 
+ - [git stash](#git-stash)
 
 ### git config
 
@@ -473,10 +475,201 @@ $ git status --help
 
 ### git log
 
+Příkaz git log zobrazuje historii commitů (uložených verzí projektu) a tedy poslední ze tří stromů (HEAD):
+```
+$ git log
+commit 74794a12f6e63f4587020c28589afedb5e35c8fd (HEAD -> master)
+Author: Engeto Student <engeto-student@email.com>
+Date:   Wed Sep 11 12:01:23 2019 +0200
+    Adding .gitignore file
+...
+```
+
+Vidíme, že máme pět commitů – nejnovější nahoře. Každý obsahuje informace na čtyři řádky:
+
+ - commit ID (74794a12...) – unikátní označení commitu,
+ - autor (Engeto Student) – kdo provedl commit,
+ - časová známka (Wed Sep 11 12:01:23 2019 +0200) – kdy byl commit proveden,
+ - commit zpráva (Adding .gitignore file) – popisuje commit.
+
+Často se setkáš také se zkrácenou variantou – git log --oneline, která zobrazuje jednořádkový výpis:
+
+```
+$ git log --oneline                 # Jednořádkový výpis.
+74794a1 (HEAD -> master) Adding .gitignore file
+43897ff Commiting originally unstaged line
+eee4182 Commiting only staged line
+69a4285 Added script.py
+887e7f9 Added new line to README.md
+1d4c70e (origin/master, origin/HEAD) Initial commit
+```
+
+Další běžné varianty příkazu:
+
+```
+$ git log -n <počet>                # Vypíše určitý počet commitů od posledního commitu.
+$ git log --stat                    # Podrobnější výpis zahrnující souhrnné změny konkrétních souborů.
+$ git log -p                        # Ještě více podrobný výpis zahrnující konkrétní rozdíly v jednotlivých souborech (diff).
+$ git log --author="jmeno autora"   # Výpis podle autora.
+$ git log --since="01-Aug-2019"     # Výpis od určitého data.
+```
+
 ### git tag
 
+Tagy jsou nálepky, které používáme pro označení určitého commitu. Jde vlastně o záložku, jež usnadňuje odkazování na určitý bod v historii. Kdybychom neměli tagy, museli bychom používat commit ID.
+
+Tagy se většinou používají jako označení pro release sofwaru. Je ale na nás, který commit označíme pomocí tagu. Tag vytváříme vždy pro aktuální commit.
+
+Nyní se nacházíme na commitu 74794a1.
+```
+$ git log --oneline
+74794a1 (HEAD -> master) Adding .gitignore file
+```
+Při použití příkazu git tag <název tagu> bude nálepka připnuta k tomuto commitu. Můžeme vytvořit dva druhy tagu:
+
+ - lehké (anglicky lightweight tag)
+```
+$ git tag v1.1                              # v1.1 je název našeho lehkého tagu.
+```
+ - okomentované (anglicky annotated tag) pomocí přepínače -a (z anglicky annotate) a -m (z anglicky message), čímž připojíme komentář.
+```
+$ git tag -a v1.2 -m "Version 
+1.2 with my first annotated tag"            # v1.2 je název našeho okomentovaného tagu.
+```
+Výpis všech tagů by potom byl:
+```
+$ git tag
+v1.1
+v1.2
+```
+Oba tagy se tedy vážou k aktuální verzi.
+```
+$ git log --oneline             # Podíváme se na jednořádkový výpis commitů.
+74794a1 (HEAD -> master, tag: v1.2, tag: v1.1) Adding .gitignore file
+43897ff Commiting originally unstaged line
+eee4182 Commiting only staged line
+69a4285 Added script.py
+887e7f9 Added new line to README.md
+1d4c70e (origin/master, origin/HEAD) Initial commit
+```
+Mohli bychom ale také otagovat některý z předchozích commitů. Zkusme otagovat náš první commit, jehož hash začíná 887e7f9:
+```
+$ git tag v1.0 887e7f9                    # Tagování commitu s ID 887e7f9.
+$ git log --oneline 887e7f9               # Zobrazení commitů od 887e7f9 zpátky.
+887e7f9 (tag: v1.0) Added new line to README.md
+1d4c70e (origin/master, origin/HEAD) Initial commit
+```
+Odstranit tag můžeme pomocí přepínače -d. Odstraňme náš okomentovaný tag – v1.2.
+```
+$ git tag -d v1.2
+Deleted tag 'v1.2' (was 74794a1)
+```
+Zůstaly nám tagy v1.1 a v1.0.
+```
+$ git tag
+v1.0
+v1.1
+```
+
 ### git blame
+
+Příkaz git blame používáme ve spojení s určitým souborem. Příkaz zjišťuje, kdo upravil kterou verzi určitého řádku.
+```
+$ git blame README.md
+^1d4c70e (engeto-student  2019-09-11 10:23:59 +0200 1) # my-github-repo
+^1d4c70e (engeto-student  2019-09-11 10:23:59 +0200 2) I will test my Git knowledge on this repo.
+887e7f94 (Engeto Student  2019-09-11 10:29:56 +0200 3) I have added new text into this file.
+eee41827 (Engeto Student  2019-09-11 10:34:12 +0200 4) This is a staged line
+43897ff4 (Engeto Student  2019-09-11 12:00:22 +0200 5) This is an unstaged line
+```
+
+Výpis se skládá z následujících sloupců:
+```
+Commit Id    Autor              Časová známka               Číslo řádku     Obsah řádku
+^1d4c70e    (engeto-student     2019-09-11 10:23:59 +0200   1)              # my-github-repo
+```
+
+Všimni si, že dokud nemáme nastavené jméno a příjmení (git config), na místě autora se používá GitHub přezdívka.
+
+Zmiňme dva užitečné přepínače:
+```
+$ git blame -L 1,3 README.md            # Výpis pouze řádku 1-3.
+$ git blame -e README.md                # Vypíše email místo jména.
+```
 
 ### git checkout
 
 ### git merge
+
+### git stash
+
+Git má dočasný úložný prostor, který se nazývá the stash (skrýš). Sem si můžeme dočasně odložit všechny aktuální změny z pracovního adresáře (working directory) do prostoru připravených změn (staging area).
+
+Zkusme nyní použít git stash:
+```
+$ git stash
+Saved working directory and index state WIP on master: 5cc57f3 Added new line in README.md
+Co nám tedy zůstalo?
+```
+```
+$ git status
+...
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+    .gitignore
+...
+```
+Zůstal tedy nesledovaný soubor (.gitignore) a odložil se nám soubor ve working directory (README.md). Než si ukážeme, jak odložit nesledované soubory, vraťme se nejdřív zpět k README.md pomocí příkazu git stash pop:
+```
+$ git stash pop
+...
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+    modified:   README.md
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+    .gitignore
+...
+```
+
+Kdybychom chtěli odložit i nesledované soubory, mohli bychom přidat přepínač -u:
+
+```
+$ git stash -u
+Saved working directory and index state WIP on master: 5cc57f3 Added new line in README.md
+```
+Nyní bychom neměli vidět žádné soubory, když spustíme git status, že?
+
+```
+$ git status
+...
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+    .idea/
+...
+```
+
+Co se stalo? Odložili jsme si totiž i nesledovaný soubor .gitignore, který v sobě uchovával informaci o tom, že složka .idea/ by měl být ignorovaná. Nyní ji tedy máme v nesledovaných souborech. Vraťme změny a zkusme odložit i ji.
+```
+$ git stash pop
+...
+$ git stash -a                  # Pomocí přepínače `-a` můžeme odložit i ignorované soubory.
+...
+$ git status 
+On branch master
+Your branch is ahead of 'origin/master' by 2 commits.
+  (use "git push" to publish your local commits)
+nothing to commit, working tree clean
+```
+
+Vraťme nyní vše do původního stavu:
+```
+$ git stash pop
+```
+
+Známe tedy tři způsoby použití:
+
+ - git stash – odloží sledované soubory,
+ - git stash -u – odloží sledované i nesledované soubory,
+ - git stash -a – odloží sledované, nesledované i ignorované soubory.
