@@ -261,6 +261,8 @@ Pokud máš Windows, budeš používat Git Bash, který přichází s instalací
  
  - [git blame](#git-blame)
  
+ - [git branch](#git-branch)
+ 
  - [git checkout](#git-checkout)
  
  - [git merge](#git-merge)
@@ -473,6 +475,24 @@ $ git status --help
 
 ### git diff
 
+Slouží k zobrazení/porovnání změn mezi různými verzemi vetví, souborů...
+
+Základní volání bez jakých kolik parametrů:
+```
+git diff
+```
+zobrazí změny mezi aktuální verzí a posledním commitem.
+
+Můžeme také kupříkladu zobrazit změny mezi různými vetvěmi, což provědeme tak, že jako parametr uvedeme jména těch dvou větví oddělené mezerou:
+```
+git diff nazev_prvni_vetve nazev_druhe_vetve
+```
+
+Porovnat jde také třeba jen různé verze konkrétního souboru - to provedeme tak, že krom verzí ještě uvedeme i cestu k tomuto souboru:
+```
+git diff nazev_prvni_vetve nazev_druhe_vetve ./README.md
+```
+
 ### git log
 
 Příkaz git log zobrazuje historii commitů (uložených verzí projektu) a tedy poslední ze tří stromů (HEAD):
@@ -597,9 +617,35 @@ $ git blame -L 1,3 README.md            # Výpis pouze řádku 1-3.
 $ git blame -e README.md                # Vypíše email místo jména.
 ```
 
+### git branch
+
+Příkaz k vytvoření nové větve. Jako parametr předáváme jméno nové větve a ta se vytvoří jako kopie větvě, na které se zvorvna nacházíme.
+
+```
+git branch jmeno_nove_vetve
+```
+Pozor, po vytvoření stále zústáváte na té půvoní větvi!
+
 ### git checkout
 
+Slouží k přepínání mezi větvemi - jako paramert předáváme jméno větve, na kterou se chceme přepnout.
+
+```
+git checkout jmeno_vetve_na_kterou_se_chci_prepnout
+```
+
+Existuje příkaz, který je kombinací branch a checkout a to:
+```
+git checkout -b jmeno_nove_vetve
+```
+Který nám vytvoří novou větev z větve na které se nacházíme a rovnou nás na tu novou větev přepne.
+
 ### git merge
+
+Tento příkaz slouží k zaintegrování změn z jedné větve do druhé. A funguje tak, že do větvě, na které zrovna jste, zaintegruje změny z větvě, jejíž jméno předáte jako parametr:
+```
+git merge jmeno_vetve_jejiz_zmeny_chceme_dostat_do_vetve_na_ktere_jsme
+```
 
 ### git stash
 
